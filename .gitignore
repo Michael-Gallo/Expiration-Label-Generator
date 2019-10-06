@@ -1,0 +1,15 @@
+*.tar.gz
+*Buy-List*.csv
+*.~lock*.csv
+*.~lock*.csv#
+*buy-list*.csv
+*buy*list*.csv
+FBA-Shipment-Template*.txt
+FBA-upload_template*.txt
+All+Listings+Report*.txt
+Legendary*Sourcing*Buy*List*.csv
+output-*.csv
+labels.pdf
+products.pdf
+*.pyc
+keepakey.txt
