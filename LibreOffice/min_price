@@ -1,0 +1,8 @@
+
+Function min_price(cost,fba,ref,min_marg,min_net)
+	marg_price = (cost+fba)/(1-min_marg-ref)
+	net_price = (min_net+cost+fba)/(1-ref)
+	function_caller = createUnoService("com.sun.star.sheet.FunctionAccess")
+	min_price_unrounded = function_caller.callFunction("MAX",Array(marg_price,net_price))
+	min_price = function_caller.callFunction("ROUND",Array(min_price_unrounded,"2"))
+End Function
