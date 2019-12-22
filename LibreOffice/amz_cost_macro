@@ -1,5 +1,6 @@
 Function amz_cost(sku)
 	reg_pattern = "[:digit:]+\.[:digit:][:digit:]"
 	function_caller = createUnoService("com.sun.star.sheet.FunctionAccess")
-	amz_cost=function_caller.callFunction("REGEX",Array(sku,reg_pattern))
+	amz_cost_as_string=function_caller.callFunction("REGEX",Array(sku,reg_pattern))
+	amz_cost = function_caller.callFunction("VALUE",Array(amz_cost_as_string))
 End Function
