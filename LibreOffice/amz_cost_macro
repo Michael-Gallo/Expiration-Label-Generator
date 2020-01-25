@@ -1,6 +1,11 @@
+
 Function amz_cost(sku)
+	On Error GoTo MyHandler
 	reg_pattern = "[:digit:]+\.[:digit:][:digit:]"
 	function_caller = createUnoService("com.sun.star.sheet.FunctionAccess")
 	amz_cost_as_string=function_caller.callFunction("REGEX",Array(sku,reg_pattern))
 	amz_cost = function_caller.callFunction("VALUE",Array(amz_cost_as_string))
+	Exit Function
+	MyHandler:
+		amz_cost = 0
 End Function
