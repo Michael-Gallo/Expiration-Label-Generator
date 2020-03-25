@@ -2,7 +2,7 @@
 Function amz_cost(sku)
 	# Will not work on old versions of LibreOffice that don't have RegEx function (like the version in the Ubuntu 18.04 repo)
 	On Error GoTo MyHandler
-	reg_pattern = "[:digit:]+\.[:digit:][:digit:]"
+	reg_pattern = "[:digit:]+\.[:digit:]{1,2}"
 	function_caller = createUnoService("com.sun.star.sheet.FunctionAccess")
 	amz_cost_as_string=function_caller.callFunction("REGEX",Array(sku,reg_pattern))
 	amz_cost = function_caller.callFunction("VALUE",Array(amz_cost_as_string))
