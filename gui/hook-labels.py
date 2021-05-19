@@ -1,0 +1,4 @@
+hiddenimports = [
+    "labels.*"
+    "labels.ANY.*"
+    ]
