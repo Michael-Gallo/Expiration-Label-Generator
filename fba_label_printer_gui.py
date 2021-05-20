@@ -24,9 +24,6 @@ root = Tk()
 root.title("FBA Label Printer")
 
 
-
-
-
 def printOut(name="printTemp.pdf"): #save the current UI to a file, print, and delete the file
     save(name)
     if printBoxBool==False:
@@ -34,27 +31,31 @@ def printOut(name="printTemp.pdf"): #save the current UI to a file, print, and d
         os.startfile(name,'print')
     else:
         createPrintWindow(name)
+
 def openPDF(name="labels.pdf"):
     save(name)
     subprocess.Popen(name,shell=True)
+
+def save(name="labels.pdf"):
+    date_quant_tuples = []
+    for date_box, quant_box in zip(dateBoxes,quantBoxes):
+        date_quant = (datetime.datetime.strptime(date_box.get(),"%m/%d/%y"),int(quant_box.get()))
+        date_quant_tuples.append(date_quant)
+
+    save_from_tuples(date_quant_tuples)
         
 
 #Create UI for functions
-
-
 maxrow=IntVar()
 printBoxBool=BooleanVar()
 printBoxBool.set(True) #Show the print dialogue by default
 
 def addBase(): # adds the base of the UI with a set number of entry rows
-##    topFrame=Frame(root)
-##    topFrame.grid(side=TOP)
-
-
     maxrow.set(0)
     for i in range(5):
         addItemRow()
     addButtons(5)
+
 def addButtons(col):
     buttonWidth=15
     topRow=1
@@ -74,6 +75,8 @@ def isPosInt(val):
         else:
             return False
     return False
+
+
 def addItemRow():  #Creates a full Item Entry Row
     maxrow.set(maxrow.get()+1)
     dateLabel= Label(root,text="Date")
@@ -101,13 +104,14 @@ def createPrintWindow(file):
     copies = Entry(printWindow,validate="key",validatecommand=(validation,'%P'))
     copies.insert(0,'1')
     copies.grid(row=1,column=1)
-    #Button(printWindow,text="Debug",command=lambda:logging.debug(selectedPrinter.get())).grid(row=2,column=1)
+    Button(printWindow,text="Debug",command=lambda:logging.debug(selectedPrinter.get())).grid(row=2,column=1)
     Button(printWindow,text="Print",command=lambda:printWindowPrint(file,selectedPrinter.get(),int(copies.get()))).grid(row=2,column=1)
     
 def getPrinterList():
     printer_info = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL|win32print.PRINTER_ENUM_CONNECTIONS)
     printer_names= [name for (flags,description, name, comment) in printer_info]
     return(printer_names)
+
 def printWindowPrint(file,printer,copies):
     for i in range(copies):
         win32api.ShellExecute(

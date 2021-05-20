@@ -1,4 +1,0 @@
-hiddenimports = [
-    "labels.*"
-    "labels.ANY.*"
-    ]
